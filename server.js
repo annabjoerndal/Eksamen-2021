@@ -9,6 +9,7 @@ const app = express();
 app.use(express.static("funkt"));
 app.use(express.json());
 
+//Forstå det der står i min body
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
@@ -18,6 +19,7 @@ app.listen(PORT, () => {
     console.log(`Server lytter til http://localhost:${PORT}`)
 });
 
+//Hele stien til filen 
 const ABSOLUTE_PATH = __dirname + "/profiles.json";
 
 
@@ -46,10 +48,7 @@ let bob = JSON.stringify(req.body);
       }
     });
 
-    res.status(200);
-
-
-    // res.status(200).json("opret profil")
+    res.status(200).json("opret profil succes")
 });
 
 //Opdater profil
