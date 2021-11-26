@@ -12,7 +12,7 @@ document.getElementById("opret-btn").addEventListener("click", () => {
     console.log(JSON.stringify(profile))
 
     //Kalder serveren
-    fetch('http://localhost:5000/opret_profil', {
+    fetch('http://localhost:5001/opret_profil', {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
