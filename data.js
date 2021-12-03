@@ -1,4 +1,4 @@
-var fs = require("fs")
+/*var fs = require("fs")
 
 function saveUser(user, res) {
     const everyUser = fs.readFileSync('users.json');
@@ -38,3 +38,4 @@ function userLogin(username, password, res) {
 }
 
 module.exports = {saveUser, userLogin};
+*/
