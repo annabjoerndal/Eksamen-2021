@@ -52,21 +52,4 @@
     window.alert("Der skete en fejl!")
 });
 })
-
-//Nichlas
-/*
-document.getElementById("login-btn").addEventListener("submit", (event) => {
-    event.preventDefault();
-    let username = document.getElementById("input-profile-login-navn").value
-    let password = document.getElementById("input-profile-login-password").value
-    let emails = JSON.stringify(email);
-    let passwords = JSON.stringify(password);
-
- var login = new Object();  
- login.username = username;
- login.password = password;
- 
- console.log(JSON.stringify(login))
- */
-
  

@@ -3,7 +3,7 @@ const fs = require("fs")
 
 const express = require('express');
 // var bodyParser = require('body-parser');
-const data = require('./data');
+//const data = require('./data');
 const app = express();
 
 const path = require('path');
@@ -21,15 +21,15 @@ app.listen(PORT, () => {
     console.log(`Server lytter til http://localhost:${PORT}`)
 });
 
-//Hele stien til filen 
+//Hele stien til filen - Profil
 const ABSOLUTE_PATH = __dirname + "/profiles.json";
 
+//Hele stien til filen - Annonce
+const ABSOLUTE_PATH_ANN = __dirname + "/products.json";
 
-//Forside - Her den tager alt info fra
-// app.get("/", (req,res) => {
-//     res.status(200).json("Forside");
 
-// });
+
+//                                   PROFIL                                   \\
 
 //Opret profil
 app.get("/opret_profil", (req,res) => {
@@ -73,29 +73,22 @@ app.post("/opdater_profil", (req,res) => {
     res.status(200).json("ok")
 });
 
-//endpoint til at opdatere sit kodeord:
-/*
-app.put("/min_profil", (req, res) => {
-    //den nye kode som brugeren sender defineres her:
-    var nyKodeord= req.body.nyKodeord
-
-    for(let i=0; i<users.length; i++) {
-        //brugeren som ønsker at opdatere kodeord findes:
-        if(users[i].email == req.session.email) {
-            users[i].kodeord = nyKodeord;
-            res.status(200).send("Din kode er nu ændret");
-            return;
-
-        }
-    } 
-    res.statusMessage = "der skete en fejl";
-    res.status(400).send("mailen findes ikke");
-});
-*/
-
 //Slet profil
 app.delete("/slet_profil", (req,res) => {
-    res.status(200).json("slet profil")
+
+    //Overskriver det som en streng
+    fs.writeFile(ABSOLUTE_PATH, '', (err) => {
+        // throws an error, you could also catch it here
+        if (err)
+        console.log(err);
+      else {
+        console.log("File written successfully\n");
+        console.log("The written has the following contents:");
+        console.log(fs.readFileSync(ABSOLUTE_PATH, "utf8"));
+      }
+});
+
+    res.status(200).json("Slet profil succes")
 });
 
 //Min profil
@@ -105,35 +98,6 @@ app.get('/min_profil', (req, res) => {
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/funkt/index.html'))
 })
-
-//Opret annonce
-app.post("/opret_annonce", (req,res) => {
-    if (req.email) {
-        const newAnnonce = {
-            varekategori: req.body.varekategori, 
-            pris: req.body.pris, 
-            billede: req.body.billede,
-        }
-
-annonce.push(newAnnonce);
-res.status(200).json("Varen er oprettet")
-
-    }
-    console.log('File recieved', req.body);
-
-    fs.writeFile(ABSOLUTE_PATH, JSON.stringify(req.body), (err) => {
-        // throws an error, you could also catch it here
-        if (err)
-        console.log(err);
-      else {
-        console.log("File written successfully\n");
-        console.log("The written has the following contents:");
-        console.log(fs.readFileSync(ABSOLUTE_PATH, "utf8"));
-      }
-    });
-
-    res.status(200).json("opret profil succes")
-});''
 
 //Login
 app.get("/login2", (req, res) =>{
@@ -189,9 +153,33 @@ app.post("/logud", (req,res) => {
     res.status(200).json("logud")
 });
 
+//                                    ANNONCE                                            \\
+
 //Opret annonce
+app.get("/opret_annonce", (req,res) => {
+    res.sendFile(path.join(__dirname,'/funkt/opret_annonce.html'))
+})
+
 app.post("/opret_annonce", (req,res) => {
-    res.status(200).json("opret annonce")
+
+    let products = fs.readFileSync(ABSOLUTE_PATH_ANN, "utf8")
+
+if()
+
+
+
+    fs.writeFile(ABSOLUTE_PATH_ANN, JSON.stringify(req.body), (err) => {
+        // throws an error, you could also catch it here
+        if (err)
+        console.log(err);
+      else {
+        console.log("File written successfully\n");
+        console.log("The written has the following contents:");
+        console.log(fs.readFileSync(ABSOLUTE_PATH_ANN, "utf8"));
+      }
+});
+
+    res.status(200).json("opret annonce succes")
 });
 
 //Opdater annonce
@@ -203,6 +191,7 @@ app.put("/opdater_annonce", (req,res) => {
 app.delete("/slet_annonce", (req,res) => {
     res.status(200).json("slet annonce")
 });
+
 
 //her er databasen
 //Her vi henter data

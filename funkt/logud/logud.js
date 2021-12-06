@@ -1,1 +1,0 @@
-//lav knap hvor jeg sætter en knap der sletter local storage
