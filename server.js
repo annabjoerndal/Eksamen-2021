@@ -136,17 +136,6 @@ app.post("/login2", (req,res) => {
     res.status(200).json("login");
 });
 
-//Login
-// app.post('../login', (req, res) => {
-//     res.sendFile(path.join(__dirname, './funkt/login/login.html'));
-// });
-
-//Henter vores username + password
-app.post('/login', (req, res) =>{
-//     const username = req.body.username
-//     const password = req.body.password
-//     data.userLogin(username, password, res)
-// });
 
 //Logud
 app.post("/logud", (req,res) => {
@@ -158,17 +147,26 @@ app.post("/logud", (req,res) => {
 //Opret annonce
 app.get("/opret_annonce", (req,res) => {
     res.sendFile(path.join(__dirname,'/funkt/opret_annonce.html'))
-})
+});
 
 app.post("/opret_annonce", (req,res) => {
 
-    let products = fs.readFileSync(ABSOLUTE_PATH_ANN, "utf8")
+    console.log("opretter annonce", req.body)
+    //Læser først om der er data i JSON
+    let productsJson = fs.readFileSync(ABSOLUTE_PATH_ANN, "utf8")
 
-if()
+    let products;
 
+    //Hvis der står noget i forvejen, parse til objekt (tilføjer)
+    if(productsJson) {
+         products = JSON.parse(productsJson);
+        products.push(req.body);
+        //Laver nyt
+    } else {
+         products = [req.body]
+    }
 
-
-    fs.writeFile(ABSOLUTE_PATH_ANN, JSON.stringify(req.body), (err) => {
+    fs.writeFile(ABSOLUTE_PATH_ANN, JSON.stringify(products), (err) => {
         // throws an error, you could also catch it here
         if (err)
         console.log(err);
@@ -180,6 +178,17 @@ if()
 });
 
     res.status(200).json("opret annonce succes")
+});
+
+//Min annonce - HTML
+app.get("/min_annonce", (req,res) => {
+    res.sendFile(path.join(__dirname,'/funkt/min_annonce.html'))
+})
+
+//Annoncer - Data
+app.get("/annoncer", (req,res) => {
+    let productsJson = fs.readFileSync(ABSOLUTE_PATH_ANN, "utf8")
+    res.status(200).json(productsJson)
 });
 
 //Opdater annonce
@@ -207,4 +216,3 @@ const saveProfileDatabase = (changedProfiles) => {
     const data = JSON.stringify(changedProfiles);
     fs.writeFileSync("profiles.json", data);
 }
-})
