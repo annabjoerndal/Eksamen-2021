@@ -194,11 +194,6 @@ app.get("/annoncer", (req, res) => {
     res.status(200).json(productsJson)
 });
 
-//Opdater annonce
-app.put("/opdater_annonce", (req, res) => {
-    res.status(200).json("opdater annonce")
-});
-
 //Slet annonce
 app.post("/slet_annonce2", (req, res) => {
 
@@ -213,12 +208,8 @@ app.post("/slet_annonce2", (req, res) => {
         //let indexParsed = JSON.parse(req.body)
 
         let i = req.body.index;
-        products = products.splice(0, 1);
+        products.splice(i, 1);
         // products = products.slice(req.body.index, 1);
-
-        //opdater følgende i opdater annoce:
-     //products[req.body.index].kategori = req.body.kategori
-
     }
     fs.writeFile(ABSOLUTE_PATH_ANN, JSON.stringify(products), (err) => {
         // throws an error, you could also catch it here
@@ -234,20 +225,23 @@ app.post("/slet_annonce2", (req, res) => {
     res.status(200).json("slet annonce")
 });
 
-
+//Opdater annonce
+app.put("/opdater_annonce", (req, res) => {
+    res.status(200).json("opdater annonce")
+});
 
 app.post("/opdater_annonce", (req, res) => {
 
     let productsJson = fs.readFileSync(ABSOLUTE_PATH_ANN, "utf8")
 
-    let products;
+    let products = "";
 
     //Hvis der står noget i forvejen, parse til objekt (tilføjer)
     if (productsJson) {
         products = JSON.parse(productsJson);
 
         //opdater følgende i opdater annoce:
-        products[req.body.index].kategori = req.body.kategori
+        products[req.body.index].varekategori = req.body.kategori
     }
 
     fs.writeFile(ABSOLUTE_PATH_ANN, JSON.stringify(products), (err) => {
@@ -263,7 +257,6 @@ app.post("/opdater_annonce", (req, res) => {
 
     res.status(200).json("slet annonce")
 });
-
 
 //her er databasen
 //Her vi henter data

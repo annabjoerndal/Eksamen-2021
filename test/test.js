@@ -19,7 +19,6 @@ describe('login', () => {
             .end((err, res) => {
                 //Forventer at der ikke er en fejl, når jeg sender request
                 expect(err).to.be.null;
-                //Skal retunere vores array
                 expect(res.status).to.equal(200);
                 done();
             });
@@ -36,7 +35,7 @@ describe('login', () => {
             .request(server)
             //Vores login endpoint
             .post('/login2')
-            .send({email:"bob0", password:"1234"})
+            .send({email:"bobo", password:"1234"})
             .end((err, res) => {
                 //Forventer at der ikke er en fejl, når jeg sender request
                 expect(err).to.be.null;
